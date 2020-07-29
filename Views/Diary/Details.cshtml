@@ -1,0 +1,147 @@
+﻿@model Diary.NET.Models.DiaryContentModel
+
+@{
+    ViewBag.Title = "Diary Details";
+    Layout = "~/Views/Shared/_LayoutDiary.cshtml";
+    <link href="~/Content/bootstrap-toggle-2.2.2.min.css" rel="stylesheet" />
+    <style>
+        #meta-info-section {
+            display:none;
+        }
+    </style>
+    
+}
+
+
+<div>
+    <h4>Diary Detail</h4>
+    <hr />
+    <div class="pull-right">
+        <div class="checkbox">
+            <h6>
+                <span style="font-weight:bold !important;" class="mr-2 pr-4">Show Meta-Info</span><label>
+
+                    <input id="meta-switch" type="checkbox" data-toggle="toggle">
+
+                </label>
+            </h6>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-sm-7 col-xs-7">
+            <div class="form-group">
+                <span class="font-weight-bold col-md-2">@Html.DisplayNameFor(model => model.Diary.Title)</span>
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.Diary.Title)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <span class="font-weight-bold col-md-2">@Html.DisplayNameFor(model => model.Diary.Body)</span>
+                <div class="col-md-10">
+                    @Html.DisplayFor(model => model.Diary.Body)
+                </div>
+            </div>
+
+            <div class="w-100" id="meta-info-section">
+                <div class="form-group">
+                    <span class="font-weight-bold col-md-2">@Html.DisplayNameFor(model => model.Diary.Status)</span>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.Diary.Status)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <span class="font-weight-bold col-md-2">@Html.DisplayNameFor(model => model.Diary.Category)</span>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.Diary.Category)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <span class="font-weight-bold col-md-2">@Html.DisplayNameFor(model => model.Diary.Hidden)</span>
+                    <div class="col-md-10">
+                        @(Model.Diary.Hidden ? "Yes":"No")
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <span class="font-weight-bold col-md-2">@Html.DisplayNameFor(model => model.Diary.LastUpDated)</span>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.Diary.LastUpDated)
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <span class="font-weight-bold col-md-2">@Html.DisplayNameFor(model => model.Diary.LastUpDatedBy)</span>
+                    <div class="col-md-10">
+                        @Html.DisplayFor(model => model.Diary.LastUpDatedBy)
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-5 col-xs-5">
+            @if (Model.Attachments.Count > 0)
+            {
+                <h6 class="font-weight-bold">Attachments</h6>
+
+                <table class="table table-borderless" id="list-table">
+                    <tr>
+                        <th></th>
+                    </tr>
+
+                    @foreach (var item in Model.Attachments)
+                    {
+                        <tr>
+
+                            <td>
+
+                                <a href="@Url.Content(item.Path)" class="text-decoration-none" target="_blank">
+                                    @Html.DisplayFor(modelItem => item.Label)
+                                </a>
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+            }
+
+        </div>
+    </div>
+   
+
+    
+</div>
+<p>
+    @*@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |*@
+    @Html.ActionLink("Delete", "Delete", new { id = Model.Diary.Id }) |
+    @Html.ActionLink("Back to List", "List")
+</p>
+@section scripts
+{
+    <script src="~/Scripts/bootstrap-toggle-2.2.2.min.js" type="text/javascript"></script>
+    <script>
+        
+
+        $(function () {
+            $('#meta-switch').change(function () {
+                $("#meta-info-section").toggle();
+            })
+        });
+        //(function () {
+        //    var meta_checkbox_toggle = document.getElementsByClassName('toggle-group')[0];
+        //    var meta_checkbox = document.getElementById('meta-switch');
+        //    var meta_info = document.getElementById('meta-info-section');
+        //    meta_checkbox.addEventListener('change', function () {
+        //        $("#meta-info-section").toggle();
+        //        if (meta_checkbox.checked) {
+        //            meta_info.style.display = "block";
+        //        } else {
+        //            meta_info.style.display = "none";
+        //        }
+        //    });
+        //})();
+    </script>
+}

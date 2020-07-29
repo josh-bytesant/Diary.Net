@@ -1,0 +1,84 @@
+﻿@model Diary.NET.Models.NewDiaryViewModel
+
+@{
+    ViewBag.Title = "New Diary Entry";
+    Layout = "~/Views/Shared/_LayoutDiary.cshtml";
+}
+
+
+
+
+@using (Html.BeginForm("New", "Diary", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>New Diary Entry</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.NewDiary.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NewDiary.Title, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.NewDiary.Title, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NewDiary.SelectedStatus, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.NewDiary.SelectedStatus, Model.Status, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.NewDiary.SelectedStatus, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NewDiary.SelectedCategory, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.NewDiary.SelectedCategory, Model.Categories, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.NewDiary.SelectedCategory, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NewDiary.Body, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NewDiary.Body, new { htmlAttributes = new { @class = "form-control", rows = "7", cols = "90" } })
+                @Html.ValidationMessageFor(model => model.NewDiary.Body, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NewDiary.Hidden, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.NewDiary.Hidden)
+                    @Html.ValidationMessageFor(model => model.NewDiary.Hidden, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.NewDiary.Files, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*<input type="file" id="FileUpload1" multiple />*@
+                @Html.TextBoxFor(model => model.NewDiary.Files, "", new { @type = "file", @multiple = "multiple", @class = "file-upload" })
+        @Html.ValidationMessageFor(model => model.NewDiary.Files, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-outline-success btn-lg" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "List")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
